@@ -28,12 +28,14 @@ quiz_data = [
             "a": "Machine Learning and Deep Learning both are two competing technologies for AI",
             "b": "Deep Learning can learn deep patterns from the data more effectively than Machine Learning and AI",
             "c": "Deep Learning is a subset of Machine Learning and Machine Learning is a subset of AI",
-            "d": "A data scientist chooses an algorithm from AI, Machine Learning, or Deep Learning that suits the domain and type of the problem to solve.",
+            "d": "A data scientist chooses an algorithm from AI, Machine Learning, or Deep Learning that suits the "
+                 "domain and type of the problem to solve.",
         },
         "correct_answer": "c",
     },
     {
-        "question": "The time in the future when machines will become more intelligent than human beings and start developing further AI is referred to as",
+        "question": "The time in the future when machines will become more intelligent than human beings and start "
+                    "developing further AI is referred to as",
         "options": {
             "a": "singularity",
             "b": "AI Age",
@@ -65,11 +67,12 @@ quiz_data = [
     },
     {
         "question": "Your team has just finished work on a data science project which involved the following steps...\n"
-                    "A) Create a graph showing revenue of customers' subscription over time"
-                    "B) Collecting data from the finance team"
+
+                    "A) Create a graph showing revenue of customers' subscription over time \n"
+                    "B) Collecting data from the finance team \n"
                     "C) Create users' clusters and perform regression to predict which customers are most likely to "
-                    "stay with the company the next year."
-                    "D) Correct data format on data collected for UK and USA customers"
+                    "stay with the company the next year. \n"
+                    "D) Correct data format on data collected for UK and USA customers \n"
 
                     "Which of the following is the right order of above-mentioned steps?",
         "options": {
@@ -84,10 +87,10 @@ quiz_data = [
         "question": "A/B testing is often used to choose between two options. Following are the necessary steps "
                     "involved in A/B testing...\n"
 
-                    "A) Check statistical significance"
-                    "B) Choose Sample Size"
-                    "C) Pick the metric to measure"
-                    "D) Run the experiment",
+                    "A) Check statistical significance \n"
+                    "B) Choose Sample Size \n"
+                    "C) Pick the metric to measure \n"
+                    "D) Run the experiment \n",
         "options": {
             "a": "C-B-D-A",
             "b": "B-C-A-D",
@@ -351,12 +354,19 @@ def display(score, correct_answers):
         print("Well done! You got all the answers correct")
     elif score == 0:
         print("You got all the answers wrong")
+        print("The correct answers are:")
+        for i in range(limit):
+            print(f"Question {i + 1}: {quiz_data[i]['question']}")
+            print(f"Correct answer: {quiz_data[i]['correct_answer']}")
+            print()
     else:
         print("You got the following answers wrong:")
-        for answer in correct_answers:
-            print(f"Question {answer}: {quiz_data[answer - 1]['question']}")
-            print(f"Correct answer: {quiz_data[answer - 1]['correct_answer']}")
-            print()
+        for i in range(limit):
+            if i + 1 not in correct_answers:
+                print(f"Question {i + 1}: {quiz_data[i]['question']}")
+                print(f"Correct answer: {quiz_data[i]['correct_answer']: quiz_data[i]['options'][quiz_data[i]['correct_answer']]}")
+                print()
+
 
 # Function to allow user to choose the amount of questions to answer
 def choose():

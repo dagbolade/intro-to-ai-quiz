@@ -327,15 +327,15 @@ quiz_data += [
 # import the necessary libraries
 import random
 
-# shuffle the quiz data
-random.shuffle(quiz_data)
-
-
 # Function to conduct the quiz and return the score and the correct answers and limit to allow user to choose the amount of questions to answer
 
 def quiz(limit):
     score = 0
     correct_answers = []
+
+    # shuffle the quiz data
+    random.shuffle(quiz_data)
+
     for i in range(limit):
         print(f"Question {i + 1}: {quiz_data[i]['question']}")
         for option in quiz_data[i]['options']:
@@ -383,7 +383,7 @@ def again():
     if response == "y":
         return True
     elif response == "n":
-        return False
+        print("Thank you for taking the quiz")
     else:
         print("Please enter y or n")
         again()
@@ -397,3 +397,4 @@ while again():
     limit = choose()
     score, correct_answers = quiz(limit)
     display(score, correct_answers)
+

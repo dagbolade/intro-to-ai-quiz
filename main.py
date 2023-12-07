@@ -64,13 +64,13 @@ quiz_data = [
         "correct_answer": "d",
     },
     {
-        "question": "Your team has just finished work on a data science project which involved the following steps..."
-                    
+        "question": "Your team has just finished work on a data science project which involved the following steps...\n"
                     "A) Create a graph showing revenue of customers' subscription over time"
                     "B) Collecting data from the finance team"
                     "C) Create users' clusters and perform regression to predict which customers are most likely to "
                     "stay with the company the next year."
                     "D) Correct data format on data collected for UK and USA customers"
+
                     "Which of the following is the right order of above-mentioned steps?",
         "options": {
             "a": "a-b-c-d",
@@ -82,8 +82,8 @@ quiz_data = [
     },
     {
         "question": "A/B testing is often used to choose between two options. Following are the necessary steps "
-                    "involved in A/B testing..."
-                    
+                    "involved in A/B testing...\n"
+
                     "A) Check statistical significance"
                     "B) Choose Sample Size"
                     "C) Pick the metric to measure"
@@ -136,8 +136,31 @@ quiz_data = [
             "d": "PCA increases the dimensionality of data.",
         },
         "correct_answer": "c",
+
     },
+
     # Add more questions here...
+    {
+        "question": "Which of the following statements applies to k-means clustering?",
+        "options": {
+            "a": "k-means clustering is a supervised learning algorithm.",
+            "b": "k-means clustering is a classification algorithm.",
+            "c": "k-means clustering is a clustering algorithm.",
+            "d": "k-means clustering is a regression algorithm.",
+        },
+        "correct_answer": "c",
+    },
+
+    {
+        "question": "bayesian optimization is used to",
+        "options": {
+            "a": "find the best hyperparameters of a model",
+            "b": "find the best model",
+            "c": "find the best features of a model",
+            "d": "find the best data for a model",
+        },
+        "correct_answer": "a",
+    },
 ]
 quiz_data += [
     {
@@ -305,26 +328,62 @@ import random
 random.shuffle(quiz_data)
 
 
-# Function to conduct the quiz
-def conduct_quiz(quiz_data):
+# Function to conduct the quiz and return the score and the correct answers and limit to allow user to choose the amount of questions to answer
+
+def quiz(limit):
     score = 0
-
-    for i, question_data in enumerate(quiz_data, start=1):
-        print(f"Question {i}: {question_data['question']}")
-        for option, answer_text in question_data['options'].items():
-            print(f"{option}) {answer_text}")
-
-        user_answer = input("Your answer: ").strip().lower()
-        correct_answer = question_data['correct_answer']
-
-        if user_answer == correct_answer:
-            print("Correct!\n")
+    correct_answers = []
+    for i in range(limit):
+        print(f"Question {i + 1}: {quiz_data[i]['question']}")
+        for option in quiz_data[i]['options']:
+            print(f"{option}: {quiz_data[i]['options'][option]}")
+        answer = input("Enter your answer: ")
+        if answer == quiz_data[i]['correct_answer']:
             score += 1
-        else:
-            print(f"Wrong! The correct answer is {correct_answer}\n")
-
-    print(f"You scored {score} out of {len(quiz_data)}")
+            correct_answers.append(i + 1)
+    return score, correct_answers
 
 
-# Conduct the quiz
-conduct_quiz(quiz_data)
+# Function to display the score and the correct answers
+def display(score, correct_answers):
+    print(f"Your score is {score}/{limit}")
+    if score == limit:
+        print("Well done! You got all the answers correct")
+    elif score == 0:
+        print("You got all the answers wrong")
+    else:
+        print("You got the following answers wrong:")
+        for answer in correct_answers:
+            print(f"Question {answer}: {quiz_data[answer - 1]['question']}")
+            print(f"Correct answer: {quiz_data[answer - 1]['correct_answer']}")
+            print()
+
+# Function to allow user to choose the amount of questions to answer
+def choose():
+    limit = int(input("How many questions would you like to answer? "))
+    if limit > len(quiz_data):
+        print(f"Sorry, there are only {len(quiz_data)} questions available")
+        limit = int(input("How many questions would you like to answer? "))
+    return limit
+
+
+# Function to allow user to choose to take the quiz again
+def again():
+    response = input("Would you like to take the quiz again? (y/n) ")
+    if response == "y":
+        return True
+    elif response == "n":
+        return False
+    else:
+        print("Please enter y or n")
+        again()
+
+
+# code to run the quiz
+limit = choose()
+score, correct_answers = quiz(limit)
+display(score, correct_answers)
+while again():
+    limit = choose()
+    score, correct_answers = quiz(limit)
+    display(score, correct_answers)

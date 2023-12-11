@@ -1,6 +1,3 @@
-# This is a sample Python script.
-
-# quiz
 quiz_data = [
     {
         "question": "What type of AI does not leverage past experience?",
@@ -322,200 +319,101 @@ quiz_data += [
         },
         "correct_answer": "c",
     },
-{
-        "question": "Discriminating between poor and best customer experience is an example of:",
-        "options": {
-            "a": "Regression",
-            "b": "Clustering",
-            "c": "Dimensionality Reduction",
-            "d": "Classification"
-        },
-        "correct_answer": "d"
-    },
-    {
-        "question": "Choose the right answer after calculating RMSE for the following values: Actual values=[2,-4,-3,"
-                    "8], Predicted values=[1,-5,-2,6]",
-        "options": {
-            "a": "1.012",
-            "b": "1.431",
-            "c": "1.232",
-            "d": "1.320",
-            "e": "1.323"
-        },
-        "correct_answer": "e"
-    },
-    {
-        "question": "Support vectors are the data points that lie closest to the decision surface (hyperplane).",
-        "options": {
-            "a": "True",
-            "b": "False"
-        },
-        "correct_answer": "a"
-    },
-    {
-        "question": "Recognizing the language of a website is an example of:",
-        "options": {
-            "a": "Regression",
-            "b": "Clustering",
-            "c": "Classification",
-            "d": "Association"
-        },
-        "correct_answer": "c"
-    },
-    {
-        "question": "If your classification problem changes from four classes to two classes, how many times do you need to train an SVM classifier using the one-vs-all method?",
-        "options": {
-            "a": "Four",
-            "b": "Once",
-            "c": "Twice",
-            "d": "Three times"
-        },
-        "correct_answer": "b"
-    },
-{
-        "question": "Bayes’ theorem describes the probability of an event based on prior knowledge of conditions that are related to the event. If the sensitivity and specificity of the classifier are 70% and 80% respectively, assuming 2% of the population has cancer, what is the probability that a random person who tests positive is a cancer patient?",
-        "options": {
-            "a": "6.67%",
-            "b": "5.24%",
-            "c": "3.20%",
-            "d": "6.07%"
-        },
-        "correct_answer": "d"  # Assuming this is the correct answer after calculation
-    },
-    {
-        "question": "Which of the following classification algorithms can generate rules?",
-        "options": {
-            "a": "Support vector machines",
-            "b": "Logistic regression",
-            "c": "Artificial neural networks",
-            "d": "Decision trees"
-        },
-        "correct_answer": "d"
-    },
-    {
-        "question": "The conditional probability P(X|Y) shows:",
-        "options": {
-            "a": "the chances of occurring event X and not event Y.",
-            "b": "the chances of occurring event Y given that event X has happened.",
-            "c": "the chances of occurring both events X and Y simultaneously.",
-            "d": "the chances of occurring event X given that event Y has happened."
-        },
-        "correct_answer": "d"
-    },
-    {
-        "question": "Multiple linear regression involves:",
-        "options": {
-            "a": "a single output variable influencing a single input variable.",
-            "b": "more than one independent variable influencing a single output variable.",
-            "c": "more than one independent variable influencing more than one output variables.",
-            "d": "a single independent variable affecting a single output variable."
-        },
-        "correct_answer": "b"
-    },
-    {
-        "question": "Generalization error is usually:",
-        "options": {
-            "a": "lower than the testing error",
-            "b": "higher than the testing error",
-            "c": "higher than the training error",
-            "d": "lower than the training error"
-        },
-        "correct_answer": "c"
-    },
-    {
-        "question": "While clustering, Object-1 and Object-2 are similar data points if:",
-        "options": {
-            "a": "Similarity < 0",
-            "b": "Similarity = 0",
-            "c": "Similarity = 1",
-            "d": "Similarity > 0"
-        },
-        "correct_answer": "d"
-    },
-{
-        "question": "If a decision tree model is too complex, which of the following can be used to decrease its "
-                    "complexity?",
-        "options": {
-            "a": "Add constraint on the tree depth",
-            "b": "Maximize the number of pure nodes",
-            "c": "Make decision tree as broad as possible",
-            "d": "Have more than one root nodes"
-        },
-        "correct_answer": "a"
-    }
 ]
 
-# import the necessary libraries
+
+ #Creating GUI app for the quiz using Tkinter
+from tkinter import *
+from tkinter import messagebox
 import random
 
-# Function to conduct the quiz and return the score and the correct answers and limit to allow user to choose the amount of questions to answer
+class QuizApp:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("AI Quiz")
+        self.master.geometry("600x400")
+        self.score = 0
+        self.questions = []
+        self.current_question = 0
+        self.total_questions = 0
+        self.start_screen()
 
-def quiz(limit):
-    score = 0
-    correct_answers = []
+    def start_screen(self):
+        self.start_label = Label(self.master, text="Enter number of questions:", font=("Helvetica", 16))
+        self.start_label.pack(pady=20)
 
-    # shuffle the quiz data
-    random.shuffle(quiz_data)
+        self.num_questions_entry = Entry(self.master, font=("Helvetica", 14))
+        self.num_questions_entry.pack(pady=10)
 
-    for i in range(limit):
-        print(f"Question {i + 1}: {quiz_data[i]['question']}")
-        for option in quiz_data[i]['options']:
-            print(f"{option}: {quiz_data[i]['options'][option]}")
-        answer = input("Enter your answer: ")
-        if answer == quiz_data[i]['correct_answer']:
-            score += 1
-            correct_answers.append(i + 1)
-    return score, correct_answers
+        self.start_button = Button(self.master, text="Start Quiz", command=self.start_quiz)
+        self.start_button.pack(pady=20)
 
+    def start_quiz(self):
+        num_questions = self.num_questions_entry.get()
+        if num_questions.isdigit():
+            num_questions = int(num_questions)
+            if 1 <= num_questions <= len(quiz_data):
+                self.total_questions = num_questions
+                self.questions = random.sample(quiz_data, num_questions)
+                self.clear_start_screen()
+                self.create_widgets()
+            else:
+                messagebox.showerror("Error", "Please enter a valid number of questions.")
+        else:
+            messagebox.showerror("Error", "Please enter a valid number.")
 
-# Function to display the score and the correct answers
-def display(score, correct_answers):
-    print(f"Your score is {score}/{limit}")
-    if score == limit:
-        print("Well done! You got all the answers correct")
-    elif score == 0:
-        print("You got all the answers wrong")
-        print("The correct answers are:")
-        for i in range(limit):
-            print(f"Question {i + 1}: {quiz_data[i]['question']}")
-            print(f"Correct answer: {quiz_data[i]['correct_answer']}")
-            print()
-    else:
-        print("You got the following answers wrong:")
-        for i in range(limit):
-            if i + 1 not in correct_answers:
-                print(f"Question {i + 1}: {quiz_data[i]['question']}")
-                print(f"Correct answer: {quiz_data[i]['correct_answer']}: {quiz_data[i]['options'][quiz_data[i]['correct_answer']]}")
-
-                print()
-
-
-# Function to allow user to choose the amount of questions to answer
-def choose():
-    limit = int(input("How many questions would you like to answer? "))
-    if limit > len(quiz_data):
-        print(f"Sorry, there are only {len(quiz_data)} questions available")
-        limit = int(input("How many questions would you like to answer? "))
-    return limit
+    def clear_start_screen(self):
+        self.start_label.destroy()
+        self.num_questions_entry.destroy()
+        self.start_button.destroy()
 
 
-# Function to allow user to choose to take the quiz again
-def again():
-    response = input("Would you like to take the quiz again? (y/n) ")
-    if response == "y":
-        return True
-    elif response == "n":
-        print("Thank you for taking the quiz")
-    else:
-        print("Please enter y or n")
-        again()
+    def create_widgets(self):
+        self.question_label = Label(self.master, text="", font=("Helvetica", 16), wraplength=500)
+        self.question_label.pack(pady=20)
 
+        self.var = StringVar()
 
-# code to run the quiz
-limit = choose()
-score, correct_answers = quiz(limit)
-display(score, correct_answers)
-while again():
-    limit = choose()
-    score, correct_answers = quiz(limit)
-    display(score, correct_answers)
+        self.radio_a = Radiobutton(self.master, text="", variable=self.var, value="a")
+        self.radio_b = Radiobutton(self.master, text="", variable=self.var, value="b")
+        self.radio_c = Radiobutton(self.master, text="", variable=self.var, value="c")
+        self.radio_d = Radiobutton(self.master, text="", variable=self.var, value="d")
+
+        self.radio_a.pack(anchor="w")
+        self.radio_b.pack(anchor="w")
+        self.radio_c.pack(anchor="w")
+        self.radio_d.pack(anchor="w")
+
+        self.submit_button = Button(self.master, text="Submit", command=self.check_answer)
+        self.submit_button.pack(pady=20)
+
+        self.update_question()
+
+    def update_question(self):
+        if self.current_question < len(quiz_data):
+            question = quiz_data[self.current_question]
+            self.question_label.config(text=question["question"])
+            self.radio_a.config(text=f"a. {question['options']['a']}")
+            self.radio_b.config(text=f"b. {question['options']['b']}")
+            self.radio_c.config(text=f"c. {question['options']['c']}")
+            self.radio_d.config(text=f"d. {question['options']['d']}")
+        else:
+            self.finish_quiz()
+
+    def check_answer(self):
+        if self.var.get() == quiz_data[self.current_question]["correct_answer"]:
+            self.score += 1
+        self.current_question += 1
+        self.update_question()
+
+    def finish_quiz(self):
+        messagebox.showinfo("Quiz Finished", f"Your score: {self.score}/{len(quiz_data)}")
+        self.master.quit()
+
+def main():
+    root = Tk()
+    app = QuizApp(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()

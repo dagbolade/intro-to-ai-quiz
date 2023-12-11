@@ -52,7 +52,7 @@ quiz_data = [
             "c": "should be set high to have a high prediction accuracy",
             "d": "should be set very carefully as they affect the prediction accuracy",
         },
-        "correct_answer": "d",
+        "correct_answer": "b",
     },
     {
         "question": "Which of the following mechanisms is most likely to be used to access Facebook and Twitter data "
@@ -218,7 +218,7 @@ quiz_data += [
         "correct_answer": "b",
     },
     {
-        "question": "Multivariant linear regression involves",
+        "question": "Multivariate linear regression involves",
         "options": {
             "a": "a single independent variable affecting a single output variable.",
             "b": "more than one independent variable influencing more than one output variable.",
@@ -245,7 +245,7 @@ quiz_data += [
             "c": "prediction will be same for all test points",
             "d": "the model will be goodfit",
         },
-        "correct_answer": "b",
+        "correct_answer": "c",
     },
     {
         "question": "Logistic Regression",
@@ -322,7 +322,7 @@ quiz_data += [
         },
         "correct_answer": "c",
     },
-{
+    {
         "question": "Discriminating between poor and best customer experience is an example of:",
         "options": {
             "a": "Regression",
@@ -372,7 +372,7 @@ quiz_data += [
         },
         "correct_answer": "b"
     },
-{
+    {
         "question": "Bayes’ theorem describes the probability of an event based on prior knowledge of conditions that are related to the event. If the sensitivity and specificity of the classifier are 70% and 80% respectively, assuming 2% of the population has cancer, what is the probability that a random person who tests positive is a cancer patient?",
         "options": {
             "a": "6.67%",
@@ -380,7 +380,7 @@ quiz_data += [
             "c": "3.20%",
             "d": "6.07%"
         },
-        "correct_answer": "d"  # Assuming this is the correct answer after calculation
+        "correct_answer": "a"  # Assuming this is the correct answer after calculation
     },
     {
         "question": "Which of the following classification algorithms can generate rules?",
@@ -430,9 +430,9 @@ quiz_data += [
             "c": "Similarity = 1",
             "d": "Similarity > 0"
         },
-        "correct_answer": "d"
+        "correct_answer": "c"
     },
-{
+    {
         "question": "If a decision tree model is too complex, which of the following can be used to decrease its "
                     "complexity?",
         "options": {
@@ -448,7 +448,9 @@ quiz_data += [
 # import the necessary libraries
 import random
 
-# Function to conduct the quiz and return the score and the correct answers and limit to allow user to choose the amount of questions to answer
+
+# Function to conduct the quiz and return the score and the correct answers and limit to allow user to choose the
+# amount of questions to answer
 
 def quiz(limit):
     score = 0
@@ -485,7 +487,8 @@ def display(score, correct_answers):
         for i in range(limit):
             if i + 1 not in correct_answers:
                 print(f"Question {i + 1}: {quiz_data[i]['question']}")
-                print(f"Correct answer: {quiz_data[i]['correct_answer']}: {quiz_data[i]['options'][quiz_data[i]['correct_answer']]}")
+                print(
+                    f"Correct answer: {quiz_data[i]['correct_answer']}: {quiz_data[i]['options'][quiz_data[i]['correct_answer']]}")
 
                 print()
 
@@ -519,3 +522,4 @@ while again():
     limit = choose()
     score, correct_answers = quiz(limit)
     display(score, correct_answers)
+41

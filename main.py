@@ -522,4 +522,3 @@ while again():
     limit = choose()
     score, correct_answers = quiz(limit)
     display(score, correct_answers)
-41
